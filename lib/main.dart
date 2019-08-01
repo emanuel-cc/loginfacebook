@@ -67,6 +67,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseUser firebaseUser;
     return MaterialApp(
       home: Scaffold(
         body: Center(
@@ -75,7 +76,9 @@ class _MyAppState extends State<MyApp> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               //Image.network(userProfile['url'], height: 50.0,width:50.0),
-              Text(userProfile["name"]),
+              //Text(firebaseUser.displayName),
+              //Image.network(firebaseUser.photoUrl),
+              Text(userProfile['name']),
                OutlineButton(
                   child: Text('Logout'),
                   onPressed: (){
