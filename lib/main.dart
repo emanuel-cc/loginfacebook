@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert' as JSON;
-import 'dart:async';
-//import 'package:google_sign_in/google_sign_in.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 
 void main() => runApp(MyApp());
@@ -16,73 +13,64 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool _isLoogedIn = false;
-  Map userProfile;
-  final facebooklogin = FacebookLogin();
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  bool isLogged = false;
+  FirebaseUser myUser;
 
-  void _login()async{
-    final result = await facebooklogin.logInWithReadPermissions(["email"]);
-    /*final result = await facebooklogin.logInWithReadPermissions(["email","public_profile"]).then((result){
+ Future<FirebaseUser> _loginWithFacebook() async {
+    var facebookLogin = new FacebookLogin();
+    var result = await facebookLogin.logInWithReadPermissions(['email']);
 
-    }).catchError((e){
-      print(e);
-    });*/
+    final token = result.accessToken.token;
 
-    switch(result.status){
-      case FacebookLoginStatus.loggedIn:
-        final token = result.accessToken.token;
-        final graphResponse = await http.get('https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=$token');
-        final profile = JSON.jsonDecode(graphResponse.body);
-        final credential = FacebookAuthProvider.getCredential(
-          accessToken: token
-        );
-        final firebaseUser = await FirebaseAuth.instance.signInWithCredential(credential);
-        print(firebaseUser.displayName);
-        print(profile);
-        setState(() {
-         userProfile=profile;
-         _isLoogedIn=true; 
-        });
-        break;
-      case FacebookLoginStatus.cancelledByUser:
-        setState(() {
-         _isLoogedIn=false; 
-        });
-        break;
+    debugPrint(result.status.toString());
 
-      case FacebookLoginStatus.error:
-        setState(() {
-         _isLoogedIn=false; 
-        });
-        break;
-
+    if (result.status == FacebookLoginStatus.loggedIn) {
+      final AuthCredential credential = FacebookAuthProvider.getCredential(accessToken: token );
+      FirebaseUser user =
+          await _auth.signInWithCredential(credential);
+      return user;
     }
+    return null;
   }
-  void _logout(){
-    facebooklogin.logOut();
-    setState(() {
-     _isLoogedIn=false; 
+
+  void _logOut()async{
+    await _auth.signOut().then((onValue){
+      setState(() {
+        
+      });
+      isLogged=false;
     });
   }
 
+  void _logIn(){
+    _loginWithFacebook().then((response){
+      if(response != null){
+        myUser = response;
+        isLogged=true;
+        setState(() {
+          
+        });
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    FirebaseUser firebaseUser;
     return MaterialApp(
       home: Scaffold(
         body: Center(
-          child: _isLoogedIn
+          child: isLogged
           ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               //Image.network(userProfile['url'], height: 50.0,width:50.0),
               //Text(firebaseUser.displayName),
-              //Image.network(firebaseUser.photoUrl),
-              Text(userProfile['name']),
+              Image.network(myUser.photoUrl),
+              Text(myUser.displayName),
                OutlineButton(
                   child: Text('Logout'),
                   onPressed: (){
-                    _logout();
+                    _logOut();
                   },
           ),
             ],
@@ -90,7 +78,7 @@ class _MyAppState extends State<MyApp> {
          : OutlineButton(
               child: Text('Iniciar Sesión en Facebook'),
               onPressed: (){
-                _login();
+                _logIn();
               },
           ),
         ),
