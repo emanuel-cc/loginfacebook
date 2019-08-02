@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
           await _auth.signInWithCredential(credential);
       return user;
     }
-    return null;
+    return myUser;
   }
 
   void _logOut()async{
@@ -47,9 +47,9 @@ class _MyAppState extends State<MyApp> {
     _loginWithFacebook().then((response){
       if(response != null){
         myUser = response;
-        isLogged=true;
+        
         setState(() {
-          
+          isLogged=true;
         });
       }
     });
