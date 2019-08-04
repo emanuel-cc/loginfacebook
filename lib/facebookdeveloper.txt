@@ -2,5 +2,18 @@ https://developers.facebook.com/apps/503475417124578/fb-login/quickstart/
 
 código hash: qbVxOyyMZIx6QIq4XGpeX0WxgbE=
 
+tjpkpncdZFSlo0QnikdDF+CDADM=
+
+Método que si funcionó:
+
+http://slproweb.com/products/Win32OpenSSL.html
+
+keytool -exportcert -alias androiddebugkey -keystore "C:\Users\Emanuel Antonio\.android\debug.keystore" | "C:\Program Files\OpenSSL-Win64\bin\openssl" sha1 -binary | "C:\Program Files\OpenSSL-Win64\bin\openssl" base64
+
+4SE3z0CPtaQeYgcGdII9GNzPvT8=
+
+keytool -exportcert -alias androiddebugkey -keystore "C:\Users\Emanuel Antonio\.android\debug.keystore" | "C:\openssl-0.9.8k_X64\bin\openssl" sha1 -binary | "C:\openssl-0.9.8k_X64\bin\openssl" base64
+
+
 
 https://github.com/malibayram91/Facebook-Login-with-Firebase-Authentication/blob/master/lib/main.dart

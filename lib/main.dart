@@ -21,15 +21,16 @@ class _MyAppState extends State<MyApp> {
     var facebookLogin = new FacebookLogin();
     var result = await facebookLogin.logInWithReadPermissions(['email']);
 
-    final token = result.accessToken.token;
+    
 
     debugPrint(result.status.toString());
 
     if (result.status == FacebookLoginStatus.loggedIn) {
-      final AuthCredential credential = FacebookAuthProvider.getCredential(accessToken: token );
-      FirebaseUser user =
+      final token = result.accessToken;
+      final AuthCredential credential = FacebookAuthProvider.getCredential(accessToken: token.token );
+       myUser =
           await _auth.signInWithCredential(credential);
-      return user;
+      return myUser;
     }
     return myUser;
   }
