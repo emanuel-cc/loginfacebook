@@ -8,12 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:772251578942:android:fa39b6b76a65013f",
+        "mobilesdk_app_id": "1:772251578942:android:db50caa7aa41902f",
         "android_client_info": {
-          "package_name": "com.example.loginfacebook"
+          "package_name": "com.codecti.selfttour"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "772251578942-943sj4119r1v533b0n8n8c54ui2k6tg7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codecti.selfttour",
+            "certificate_hash": "e12137cf408fb5a41e62070674823d18dccfbd3f"
+          }
+        },
         {
           "client_id": "772251578942-9vq01pmcinpe0ebel3bg76j6am4t255n.apps.googleusercontent.com",
           "client_type": 3
@@ -21,7 +29,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBVAP0ys_ys4npdmBBdXav5wNsj_sZL9jA"
+          "current_key": "AIzaSyA1mDT6jvAJy5RnmC6F3DZn5tP-mUuV59s"
         }
       ],
       "services": {
@@ -30,6 +38,13 @@
             {
               "client_id": "772251578942-9vq01pmcinpe0ebel3bg76j6am4t255n.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "772251578942-7ifs5mv8dei3bfq8m9euqrubtmtj9c3g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.codecti.selfttour"
+              }
             }
           ]
         }
